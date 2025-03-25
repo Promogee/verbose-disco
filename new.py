@@ -1,17 +1,20 @@
 import FreeSimpleGUI as sc
 from function import get_todo,set_todo
+import time
 
 todos = get_todo()
+clock=sc.Text('',key='clock')
 label=sc.Text('type in a todo')
 input_box=sc.InputText(tooltip='enter a todo',key='todo')
 list_box=sc.Listbox(values=get_todo(),key='todos',enable_events=True,size=[45,15])
 button=sc.Button('add')
 edit_button=sc.Button('edit')
 complete_button=sc.Button('complete')
-window=sc.Window('My todo App',layout=[[label],[input_box,button],[list_box,edit_button],[complete_button]],font=('sans-serif',15))
+window=sc.Window('My todo App',layout=[[clock],[label],[input_box,button],[list_box,edit_button],[complete_button]],font=('sans-serif',15))
 
 while True:
-    event,values=window.read()
+    event,values=window.read(timeout=10)
+    window['clock'].update(time.strftime('%d %Y %B %H:%M:%S'))
     print(event)
     print(values)
     match event:
