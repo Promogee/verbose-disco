@@ -1,12 +1,18 @@
 import streamlit as st
 import function
-todos=function.get_todo()
 
+todos=function.get_todo()
+st.title('My Todo App')
 def add_todo():
     todo=st.session_state['new_todo']+'\n'
-    todos.append(todo)
-    function.set_todo(todos)
-st.title('My Todo App')
+    for item in todos:
+        if item ==todo:
+            st.toast('you cannot put the same todo twice')
+
+        else:
+            todos.append(todo)
+            function.set_todo(todos)
+
 for index, todo in enumerate(todos):
     checkbox=st.checkbox(todo,key=todo)
     if checkbox:
